@@ -2,6 +2,8 @@
 reimplementation of the 1994 FPS Nitemare 3D in C#
 [Twitter](https://twitter.com/CatboiN).
 [Discord](https://discord.gg/pr36YJ9Njw).
+[Tumblr](https://www.tumblr.com/blog/bbqgiraffe).
+
 
 
 # how to install:
