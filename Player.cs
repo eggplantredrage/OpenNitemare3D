@@ -1,5 +1,29 @@
 using System;
 using System.Collections.Generic;
+
+/*
+Copyright (c) 2004-2007, Lode Vandevenne
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
 namespace Nitemare3D
 {
     public class Player : Entity
@@ -56,14 +80,16 @@ namespace Nitemare3D
             }
         }
 
-        void SortSprites()
+        void SortSprites() //this function was a pain in the ass
         {
             SortedList<float, int> values = new SortedList<float, int>(new DecendingComparer<float>());
 
             
             int cnt = 0;
             for(int i = 0; i < spriteCount; i++) {
-                if(values.ContainsKey(spriteDistance[i])){continue;}
+                //prevents sprites that have the same distance from crashing the game
+                //this issue should be rare unless the player is in the starting position
+                if(values.ContainsKey(spriteDistance[i])){continue;} 
                 cnt++;
                 values.Add(spriteDistance[i], spriteOrder[i]);
                 
@@ -247,7 +273,6 @@ namespace Nitemare3D
             for(int i = 0; i < spriteCount; i++)
             {
                 spriteOrder[i] = i;
-                Console.WriteLine("S " + sprites[i].spritePosition.X);
                 spriteDistance[i] = Vec2.Distance(position, sprites[i].spritePosition);
             }
 
@@ -294,6 +319,7 @@ namespace Nitemare3D
                         int d = (y) * 256 - RayHeight * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
                         int texY = ((d * spriteH) / spriteHeight) / 256;
                         var color = Img.current.entries[sprite.spriteIndex].data[texX, texY];
+
                         if(color != 31)
                         {
                             GameWindow.frameBuffer[8 + stripe, 4 + y] = Img.current.entries[sprite.spriteIndex].data[texX, texY];
