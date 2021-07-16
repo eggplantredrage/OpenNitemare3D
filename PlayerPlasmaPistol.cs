@@ -6,7 +6,7 @@ namespace Nitemare3D
         {
             texture = ImageConsts.UI_PLASMAGUN;
             fireTime = .3f;
-            fireSound = new SoundEffect(SoundConsts.WEAPON_PLASMA);
+            fireSound = SoundConsts.WEAPON_PLASMA;
         }
         public override void Fire()
         {

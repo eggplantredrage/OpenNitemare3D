@@ -21,7 +21,7 @@ namespace Nitemare3D
         {
             songid = music[1];
             pcx = hud;
-
+            Console.WriteLine("CUM");
 
             player = Entity.Create<Player>();
 

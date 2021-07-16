@@ -4,7 +4,7 @@ namespace Nitemare3D
     {
         public int texture;
         public int ammo;
-        public SoundEffect fireSound;
+        public int fireSound;
         public float fireTime;
 
 

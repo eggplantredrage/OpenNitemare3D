@@ -232,7 +232,7 @@ namespace Nitemare3D
                 {
                     fireTimer = 0;
                     weapons[weaponIndex].Fire();
-                    weapons[weaponIndex].fireSound.Play();
+                    SoundEffect.PlaySound(weapons[weaponIndex].fireSound);
                 }
 
             }

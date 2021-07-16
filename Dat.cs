@@ -56,11 +56,21 @@ namespace Nitemare3D
             return output;
         }
 
+
+        public static void Unload()
+        {
+            Uif.Clear();
+            Snd.Clear();
+            GC.Collect();
+        }
+
         public static void Load()
         {
             Uif = LoadDat(UifDir);
             Snd = LoadDat(SndDir);
 
         }
+
+        
     }
 }

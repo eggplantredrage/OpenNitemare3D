@@ -10,18 +10,27 @@ namespace Nitemare3D
         const int sampleRate = 10989;
         const int volumeModifier = 80;
         Sound sound;
-        const int soundOffset = 34;//everything before that is midi or blank
+        public const int soundOffset = 34;//everything before that is midi or blank(idk why there's blank entries)
 
         static List<SoundEffect> effects = new List<SoundEffect>();
 
         public static void PlaySound(int id)
         {
-            effects[id + soundOffset].Play();
+            effects[id - soundOffset].Play();
+        }
+
+        public static void LoadSounds()
+        {
+            for(int i = soundOffset; i < Dat.Snd.Count; i++)
+            {
+                SoundEffect sound = new SoundEffect(i);
+                effects.Add(sound);
+            }
         }
 
         public SoundEffect(int index)
         {
-            //todo versioning
+            //todo: proper VOC support
             var reader = new BinaryReader(new MemoryStream(Dat.Snd[index]));
             if(reader.BaseStream.Length <= 0){return;}
 

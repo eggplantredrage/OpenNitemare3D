@@ -6,7 +6,7 @@ namespace Nitemare3D
         {
             texture = ImageConsts.UI_MAGICWAND;
             fireTime = .3f;
-            fireSound = new SoundEffect(SoundConsts.WEAPON_MAGICWAND);
+            fireSound = SoundConsts.WEAPON_MAGICWAND;
         }
         public override void Fire()
         {

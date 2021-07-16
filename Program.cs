@@ -24,7 +24,7 @@ namespace Nitemare3D
 
 			Clock dt = new Clock();
 
-
+			SoundEffect.LoadSounds();
 
 			Scene.AddScene(new StartMenu());
 			Scene.AddScene(new MainMenu());

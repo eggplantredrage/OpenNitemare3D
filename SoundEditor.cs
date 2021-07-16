@@ -7,12 +7,10 @@ namespace Nitemare3D
 	{
 
 		int soundCount;
-		const int soundStart = 34; //everything before that is blank or a midi file
 		int index = 0;
 		string name = "";
 
 		List<string> names = new List<string>();
-		List<SoundEffect> sounds = new List<SoundEffect>();
 
 
 		void LoadSoundNames()
@@ -63,7 +61,7 @@ namespace Nitemare3D
 			if (Input.LeftClick() && inputTimer > inputTime)
 			{
 				inputTimer = 0;
-				sounds[index]?.Play();
+				SoundEffect.PlaySound(SoundEffect.soundOffset + index);
 			}
 
 			if (Input.IsKeyDown(KeyboardKey.F5) && inputTimer > inputTime)
@@ -89,9 +87,9 @@ namespace Nitemare3D
 
 			file.WriteLine("namespace Nitemare3D\n{\n\tpublic static class SoundConsts\n\t{");
 
-			for (int i = 0; i < sounds.Count; i++)
+			for (int i = 0; i < names.Count; i++)
 			{
-				int index = soundStart + i;
+				int index = SoundEffect.soundOffset + i;
 				file.WriteLine("\t\tpublic const int " + names[i].Replace("\n", string.Empty) + " = " + index + ";");
 			}
 
@@ -103,18 +101,16 @@ namespace Nitemare3D
 		public override void Load()
 		{
 			soundCount = Dat.Snd.Count;
-			//songid = MidiConsts.MIDI_FANTASIA;
-
+			songid = 0;
 			//load sounds
-			for (int i = soundStart; i < Dat.Snd.Count; i++)
+			for (int i = SoundEffect.soundOffset; i < Dat.Snd.Count; i++)
 			{
 				var dat = Dat.Snd[i];
-				sounds.Add(new SoundEffect(i));
 				names.Add("SND_" + i);
 			}
 
 
-			//LoadSoundNames();
+			LoadSoundNames();
 
 			name = names[index];
 		}

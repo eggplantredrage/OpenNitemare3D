@@ -5,7 +5,7 @@ namespace Nitemare3D
         public PlayerRevolver()
         {
             texture = ImageConsts.UI_REVOLVER;
-            fireSound = new SoundEffect(SoundConsts.WEAPON_REVOLVER01);
+            fireSound = SoundConsts.WEAPON_REVOLVER01;
             fireTime = .5f;
         }
 
