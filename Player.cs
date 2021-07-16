@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 namespace Nitemare3D
 {
     public class Player : Entity
@@ -28,7 +29,57 @@ namespace Nitemare3D
 
         const int RayHeight = 152;
         const int RayWidth = 304;
-        void RenderRaycaster()
+        int spriteCount = 0;
+        const int maxSprites = 4096;
+        public void AddSprite(ISprite sprite)
+        {
+            if(spriteCount == maxSprites)
+            {
+                throw new Exception("Sprite limit of " + maxSprites + " exceeded!");
+            }
+
+            sprites[spriteCount] = sprite;
+            spriteCount++;
+        }
+
+        ISprite[] sprites = new ISprite[maxSprites];        
+        int[] spriteOrder = new int[maxSprites];
+        float[] spriteDistance = new float[maxSprites];
+        float[] zBuffer = new float[RayWidth];
+
+
+        class DecendingComparer<TKey>: IComparer<float>
+        {
+            public int Compare(float x, float y)
+            {
+                return y.CompareTo(x);
+            }
+        }
+
+        void SortSprites()
+        {
+            SortedList<float, int> values = new SortedList<float, int>(new DecendingComparer<float>());
+
+            
+            int cnt = 0;
+            for(int i = 0; i < spriteCount; i++) {
+                if(values.ContainsKey(spriteDistance[i])){continue;}
+                cnt++;
+                values.Add(spriteDistance[i], spriteOrder[i]);
+                
+            }
+
+            for(int i = 0; i < cnt; i++)
+            {
+                spriteDistance[i] = values.Keys[i];
+                spriteOrder[i] = values.Values[i];
+            }
+
+                        
+        }
+        
+        
+        public void RenderRaycaster()
         {
             var direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation)).Normalize();
 
@@ -188,9 +239,73 @@ namespace Nitemare3D
 
                 }
 
+                zBuffer[x] = perpWallDist;
+
 
             }
 
+            for(int i = 0; i < spriteCount; i++)
+            {
+                spriteOrder[i] = i;
+                Console.WriteLine("S " + sprites[i].spritePosition.X);
+                spriteDistance[i] = Vec2.Distance(position, sprites[i].spritePosition);
+            }
+
+            SortSprites();
+
+            for(int i = 0; i < spriteCount; i++)
+            {
+                //sprite position relative to camera
+                Vec2 spritePos = sprites[spriteOrder[i]].spritePosition - position;
+
+                var sprite = sprites[i];
+
+                float invDet = 1.0f / (plane.X * direction.Y - direction.X * plane.Y);
+
+
+                float transformX = invDet * (direction.Y * spritePos.X - direction.X * spritePos.Y);
+                float transformY = invDet * (-plane.Y * spritePos.X + plane.X * spritePos.Y); 
+
+                int spriteScreenX = (int)((RayWidth / 2) * (1 + transformX / transformY));
+
+                int spriteHeight = (int)MathF.Abs((int)(RayHeight / (transformY)));
+
+                int drawStartY = -spriteHeight / 2 + RayHeight / 2;
+                if(drawStartY < 0) drawStartY = 0;
+                int drawEndY = spriteHeight / 2 + RayHeight / 2;
+                if(drawEndY >= RayHeight) drawEndY = RayHeight - 1;
+
+                int spriteWidth = (int)MathF.Abs( (int) ( RayHeight / (transformY)));
+                int drawStartX = -spriteWidth / 2 + spriteScreenX;
+                if(drawStartX < 0) drawStartX = 0;
+                int drawEndX = spriteWidth / 2 + spriteScreenX;
+                if(drawEndX >= RayWidth) drawEndX = RayWidth - 1;
+
+
+                var spriteW = Img.current.entries[sprite.spriteIndex].width;
+                var spriteH = Img.current.entries[sprite.spriteIndex].height;
+                for(int stripe = drawStartX; stripe < drawEndX; stripe++)
+                {
+                    int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * spriteW / spriteWidth) / 256;
+                    
+                    if(transformY > 0 && stripe > 0 && stripe < RayHeight && transformY < zBuffer[stripe])
+                    for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
+                    {
+                        int d = (y) * 256 - RayHeight * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
+                        int texY = ((d * spriteH) / spriteHeight) / 256;
+                        var color = Img.current.entries[sprite.spriteIndex].data[texX, texY];
+                        if(color != 31)
+                        {
+                            GameWindow.frameBuffer[8 + stripe, 4 + y] = Img.current.entries[sprite.spriteIndex].data[texX, texY];
+                        }
+                        
+
+                    }
+                }
+
+            }
+
+            //handle tile use
             if (Input.IsKeyDown(KeyboardKey.Space))
             {
                 var tileFacing = position + direction;
@@ -261,7 +376,7 @@ namespace Nitemare3D
 
         public override void Update()
         {
-            RenderRaycaster();
+            //RenderRaycaster();
             RenderWeapon();
 
             float oldRot = rotation;

@@ -41,16 +41,17 @@ namespace Nitemare3D
 				Time.dt = dt.Restart().AsSeconds();
 				GameWindow.Clear();
 
-				Entity.UpdateEntites();
-
-				GameWindow.DrawPcx();
-				GameWindow.DrawFrameBuffer();
 				
 				Level.Update();
+				
 				if (!Scene.currentScene.fading)
 				{
 					Scene.currentScene.Update();
 				}
+				GameWindow.DrawPcx();
+				GameWindow.DrawFrameBuffer();
+				
+				
 
 				Input.Update();
 

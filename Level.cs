@@ -13,31 +13,122 @@ namespace Nitemare3D
 
         static void SpawnMapObject(int id, int x, int y)
         {
+            if(id == 0){return;}
             var position = new Vec2(x, y) + .5f;
-            if (id == 0) { return; }
-            switch (id)
+
+            var type = (ObjectType)id;
+            Entity ent = null;
+            ent = new DumbObject(197);
+
+            switch (type)
             {
-                case 1:
+                case ObjectType.NULL:
+                    break;
+                case ObjectType.STARTN:
                     Game.player.position = position;
                     Game.player.SetRotation(-90);
                     break;
-                case 2:
+                case ObjectType.STARTE:
                     Game.player.position = position;
+                    Game.player.SetRotation(0);
                     break;
-
-                case 3:
+                case ObjectType.STARTS:
                     Game.player.position = position;
                     Game.player.SetRotation(90);
                     break;
-
-                case 4:
+                case ObjectType.STARTW:
                     Game.player.position = position;
                     Game.player.SetRotation(180);
+                    break;
+                case ObjectType.Key1:
+                    break;
+                case ObjectType.Key2:
+                    break;
+                case ObjectType.Key3:
+                    break;
+                case ObjectType.Key4:
+                    break;
+                case ObjectType.Card1:
+                    break;
+                case ObjectType.Card2:
+                    break;
+                case ObjectType.Desk:
+                    break;
+                case ObjectType.DiningRoomTable:
+                    break;
+                case ObjectType.Lamp1:
+                    break;
+                case ObjectType.Lamp2:
+                    break;
+                case ObjectType.Lamp3:
+                    break;
+                case ObjectType.Lamp4:
+                    break;
+                case ObjectType.RedPotion:
+                    break;
+                case ObjectType.BluePotion:
+                    break;
+                case ObjectType.TombGrass:
+                    break;
+                case ObjectType.TombPlain:
+                    break;
+                case ObjectType.TombFlower:
+                    break;
+                case ObjectType.TombPushable:
+                    break;
+                case ObjectType.MagicEye:
+                    break;
+                case ObjectType.CrystalBall:
+                    break;
+                case ObjectType.Couch:
+                    break;
+                case ObjectType.EasyChair:
+                    break;
+                case ObjectType.BedSide:
+                    break;
+                case ObjectType.BedFront:
+                    break;
+                case ObjectType.PentaGramRed:
+                    break;
+                case ObjectType.PentagramGreen:
+                    break;
+                case ObjectType.PentagramBlue:
+                    break;
+                case ObjectType.PentagramYellow:
+                    break;
+                case ObjectType.WeaponPlasma:
+                    break;
+                case ObjectType.WeaponMagicWand:
+                    break;
+                case ObjectType.WeaponPistol:
+                    break;
+                case ObjectType.WeaponAutoPlasma:
+                    break;
+                case ObjectType.AmmoSilverBullet:
+                    break;
+                case ObjectType.AmmoPlasma:
+                    break;
+                case ObjectType.AmmoSpellBook:
+                    break;
+                case ObjectType.Scroll01532:
+                    break;
+                case ObjectType.Scroll080993:
+                    break;
+                case ObjectType.Scroll372535:
+                    break;
+                case ObjectType.FireL:
+                    break;
+                case ObjectType.FireM:
+                    break;
+                case ObjectType.FireS:
                     break;
 
                 default:
                     break;
-
+            }
+            if(ent != null)
+            {
+                Entity.Add(ent, position);
             }
         }
 

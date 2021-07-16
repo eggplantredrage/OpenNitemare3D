@@ -19,6 +19,12 @@ namespace Nitemare3D
             return Create<T>(0, 0);
         }
 
+        public static void Add(Entity entity, Vec2 position)
+        {
+            entityQueue.Add(entity);
+            entity.position = position;
+        }
+
         public static T Create<T>(Vec2 position) where T : Entity
         {
             return Create<T>(position.X, position.Y);
@@ -34,13 +40,14 @@ namespace Nitemare3D
 
         public static void UpdateEntites()
         {
-            foreach (var entity in entities)
-            {
-                entity.Update();
-            }
             foreach (var entity in entityQueue)
             {
                 entities.Add(entity);
+            }
+
+            foreach (var entity in entities)
+            {
+                entity.Update();
             }
             entityQueue.Clear();
         }
