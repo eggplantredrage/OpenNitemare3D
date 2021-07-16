@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "SlmEBujSOGkafjrBIc0wGk65MwfTckuD+d03LDRkfjWMoivXQO0E4N70Hu5o6Q+BaiZ3aWhvVcROjL3zauJDjA==",
+  "success": true,
+  "projectFilePath": "/home/bbq/GitHub/OpenNitemare3D/Nitemare3D.csproj",
+  "expectedPackageFiles": [
+    "/home/bbq/.nuget/packages/adlmidi.net/1.0.13/adlmidi.net.1.0.13.nupkg.sha512",
+    "/home/bbq/.nuget/packages/csfml/2.5.0/csfml.2.5.0.nupkg.sha512",
+    "/home/bbq/.nuget/packages/meltysynth/1.1.3/meltysynth.1.1.3.nupkg.sha512",
+    "/home/bbq/.nuget/packages/serdesnet/1.7.2/serdesnet.1.7.2.nupkg.sha512",
+    "/home/bbq/.nuget/packages/sfml.audio/2.5.0/sfml.audio.2.5.0.nupkg.sha512",
+    "/home/bbq/.nuget/packages/sfml.graphics/2.5.0/sfml.graphics.2.5.0.nupkg.sha512",
+    "/home/bbq/.nuget/packages/sfml.net/2.5.0/sfml.net.2.5.0.nupkg.sha512",
+    "/home/bbq/.nuget/packages/sfml.system/2.5.0/sfml.system.2.5.0.nupkg.sha512",
+    "/home/bbq/.nuget/packages/sfml.window/2.5.0/sfml.window.2.5.0.nupkg.sha512",
+    "/home/bbq/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512"
+  ],
+  "logs": []
+}
