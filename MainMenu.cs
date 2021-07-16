@@ -1,7 +1,7 @@
 using System;
 namespace Nitemare3D
 {
-    public class MainMenu : Menu
+    public class MainMenu : Scene
     {
         const uint textX = 110;
         const uint textY = 60;
@@ -13,18 +13,10 @@ namespace Nitemare3D
 
         void LoadSoundEditor()
         {
-            FadeOut(new SoundEditor(), 1f);
+            FadeOut(Scene.LEVEL_SOUNDEDITOR, 1f);
         }
 
-        public MainMenu()
-        {
-            songid = MidiConsts.MIDI_FANTASIA;
-            pcx = menu;
-            menufunctions[0] = (Action)SelectLevel;
-            menufunctions[5] = (Action)LoadSoundEditor;
-
-        }
-
+       
 
         string[] mainMenuItems = new string[]
         {
@@ -48,7 +40,7 @@ namespace Nitemare3D
         {
 
 
-            FadeOut(new LevelSelect(), 1f);
+            FadeOut(Scene.LEVEL_LEVELSELECT, 1f);
 
         }
 
@@ -88,6 +80,18 @@ namespace Nitemare3D
             }
 
 
+        }
+
+        public override void Load()
+        {
+            songid = MidiConsts.MIDI_FANTASIA;
+            pcx = menu;
+            menufunctions[0] = (Action)SelectLevel;
+            menufunctions[5] = (Action)LoadSoundEditor;
+        }
+
+        public override void UnLoad()
+        {
         }
     }
 }

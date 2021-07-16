@@ -1,15 +1,10 @@
 using System;
 namespace Nitemare3D
 {
-    public class StartMenu : Menu
+    public class StartMenu : Scene
     {
         Pcx menu = new Pcx(Dat.Uif[ImageConsts.MENU_MAIN]);
         Pcx start = new Pcx(Dat.Uif[ImageConsts.MENU_STARTSCREEN]);
-        public StartMenu()
-        {
-            songid = MidiConsts.MIDI_HAUNTED_HOUSE_THEME;
-            pcx = start;
-        }
 
 
         float blinkTimer = 0;
@@ -35,8 +30,33 @@ namespace Nitemare3D
 
             if (Input.IsKeyDown(KeyboardKey.Enter) && canStart)
             {
-                FadeOut(new MainMenu(), .5f);
+                FadeOut(Scene.LEVEL_MAINMENU, .5f);
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
+        public override void Load()
+        {
+            songid = MidiConsts.MIDI_HAUNTED_HOUSE_THEME;
+            pcx = start;
+        }
+
+        public override void UnLoad()
+        {
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace Nitemare3D
 {
-    public class LevelSelect : Menu
+    public class LevelSelect : Scene
     {
 
         const uint textX = 110;
@@ -38,7 +38,7 @@ namespace Nitemare3D
 
                 if (Input.IsKeyDown(KeyboardKey.Enter))
                 {
-                    FadeOut(new Game(selection + 1, 0), 1f);
+                    FadeOut(Scene.LEVEL_GAME, 1f);
                 }
             }
 
@@ -48,6 +48,14 @@ namespace Nitemare3D
                 uint y = textY + (i * 20) - 20;
                 GameWindow.DrawText(textX, y, "Episode " + i, color);
             }
+        }
+
+        public override void Load()
+        {
+        }
+
+        public override void UnLoad()
+        {
         }
     }
 }

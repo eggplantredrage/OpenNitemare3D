@@ -27,8 +27,8 @@ namespace Nitemare3D
         public const int PALETTE_FLOOR = 2;
 
 
-        public static Vec2i UI_WEAPONPOSITION = new Vec2i(146, 113);
-        public static Vec2i UI_FACEPOSITION = new Vec2i(3, 162);
+        public static Vec2i UI_WEAPONPOSITION{get;} = new Vec2i(146, 113);
+        public static Vec2i UI_FACEPOSITION{get;} = new Vec2i(3, 162);
 
 
 

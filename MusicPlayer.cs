@@ -13,7 +13,7 @@ namespace Nitemare3D
         }
         public static void Play(int id)
         {
-            if (id == songid)
+            if (id == songid || id < 1)
             {
                 return;
             }

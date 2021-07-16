@@ -23,6 +23,7 @@ namespace Nitemare3D
         {
             //todo versioning
             var reader = new BinaryReader(new MemoryStream(Dat.Snd[index]));
+            if(reader.BaseStream.Length <= 0){return;}
 
             var samples = reader.ReadBytes((int)reader.BaseStream.Length);
 

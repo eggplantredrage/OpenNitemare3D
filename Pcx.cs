@@ -10,7 +10,6 @@ namespace Nitemare3D
         const int Width = 320;
         const int Height = 200;
 
-        public byte[] Pal = new byte[768];
         public byte[,] ImageData = new byte[Width, Height];
 
         byte[,] DecodePixels(BinaryReader reader)
@@ -47,7 +46,7 @@ namespace Nitemare3D
                     }
                 }
 
-                if (x >= bytesPerScanline)//Next row
+                if (x >= bytesPerScanline)
                 {
                     x = 0;
                     y += 1;
@@ -73,10 +72,9 @@ namespace Nitemare3D
 
 
                 ImageData = DecodePixels(reader);
-                reader.BaseStream.Position++;
+                reader.BaseStream.Position++; //random last byte
 
 
-                Pal = reader.ReadBytes(768);
 
             }
         }

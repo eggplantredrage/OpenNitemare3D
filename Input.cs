@@ -3,7 +3,7 @@ using SFML.Window;
 using System;
 namespace Nitemare3D
 {
-
+    //todo: implement more keys, should be easy to just automate at some point    
     public enum KeyboardKey
     {
         Enter = Key.Enter,

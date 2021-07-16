@@ -52,8 +52,9 @@ namespace Nitemare3D
             BinaryReader reader = new BinaryReader(File.OpenRead(file));
             reader.BaseStream.Position = 4;
 
-            List<UInt32> offsets = new List<UInt32>();
-
+            //honestly we don't even need the offsets since each entry has a width and height
+            //smh David Gray
+            List<UInt32> offsets = new List<UInt32>(); 
             int retval = 0;
             UInt32 offset;
             UInt32 lowestOffset = 0xFFFFFFFF;

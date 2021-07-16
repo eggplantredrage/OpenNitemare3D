@@ -50,6 +50,8 @@ namespace Nitemare3D
             return (byte)newPixel;
         }
 
+
+        //todo: bitmap fonts
         public static void DrawText(uint x, uint y, string text, int color)
         {
             sfText.Position = new Vector2f(x, y);
@@ -148,7 +150,7 @@ namespace Nitemare3D
                 for (int ty = 0; ty < img.height; ty++)
                 {
                     var i = img.data[tx, ty];
-                    if (i == 31) { continue; }
+                    if (i == 31) { continue; } //white is transparent
 
                     frameBuffer[tx + position.X, ty + position.Y] = i;
 
@@ -158,17 +160,14 @@ namespace Nitemare3D
 
         public static void DrawPcx()
         {
-            if (Menu.currentMenu.pcx == null) { return; }
+            if (Scene.currentScene.pcx == null) { return; }
             for (int x = 0; x < 320; x++)
             {
                 for (int y = 0; y < 200; y++)
                 {
-                    var i = Menu.currentMenu.pcx.ImageData[x, y];
-                    if (i == 0) { continue; }
-                    var r = Menu.currentMenu.pcx.Pal[3 * (i)];
-                    var g = Menu.currentMenu.pcx.Pal[3 * (i) + 1];
-                    var b = Menu.currentMenu.pcx.Pal[3 * (i) + 2];
-                    renderTarget.SetPixel((uint)x, (uint)y, new Color(r, g, b, Menu.currentMenu.alpha));
+                    var i = Scene.currentScene.pcx.ImageData[x, y];
+                    if (i == 0) { continue; } //don't draw black pixels
+                    frameBuffer[x,y] = i;
                 }
             }
         }

@@ -90,6 +90,8 @@ namespace Nitemare3D
                 mutex = new object();
 
                 Initialize(2, (uint)sampleRate);
+
+                Volume = 50;
             }
 
             public void SetMidiFile(MidiFile midiFile, bool loop)

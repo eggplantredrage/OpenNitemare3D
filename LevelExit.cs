@@ -13,6 +13,7 @@ namespace Nitemare3D
 
         public override void OnUse()
         {
+            Game.level++;
             Level.LoadMap(1, 1);
         }
 

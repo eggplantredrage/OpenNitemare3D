@@ -4,56 +4,63 @@ using System.Runtime.InteropServices;
 using SFML.System;
 namespace Nitemare3D
 {
-    class Program
-    {
+	class Program
+	{
 
-        [DllImport("X11")]
-        extern public static int XInitThreads();
-        static void Main(string[] args)
-        {
+		[DllImport("X11")]
+		extern public static int XInitThreads();
+		static void Main(string[] args)
+		{
 
-            XInitThreads();
+			XInitThreads();
 
-            Dat.Load();
+			Dat.Load();
 
 
-            GameWindow.Init();
-            Input.Init();
+			GameWindow.Init();
+			Input.Init();
 
-            Img i = new Img("data/IMG.1");
+			Img i = new Img("data/IMG.1");
 
-            Clock dt = new Clock();
-
-            Menu.currentMenu = new StartMenu();
+			Clock dt = new Clock();
 
 
 
+			Scene.AddScene(new StartMenu());
+			Scene.AddScene(new MainMenu());
+			Scene.AddScene(new LevelSelect());
+			Scene.AddScene(new SoundEditor());
+			Scene.AddScene(new Game());
 
-            while (GameWindow.IsOpen())
-            {
-                MusicPlayer.Play(Menu.currentMenu.songid);
-                Time.dt = dt.Restart().AsSeconds();
-                GameWindow.Clear();
-
-                Entity.UpdateEntites();
-
-                GameWindow.DrawFrameBuffer();
-                GameWindow.DrawPcx();
-                Level.Update();
-                if (!Menu.currentMenu.fading)
-                {
-                    Menu.currentMenu.Update();
-                }
-
-                Input.Update();
-
-                Menu.currentMenu.UpdateFading();
-                GameWindow.Display();
-            }
+			Scene.Start();
 
 
+			while (GameWindow.IsOpen())
+			{
+				MusicPlayer.Play(Scene.currentScene.songid);
+				Time.dt = dt.Restart().AsSeconds();
+				GameWindow.Clear();
+
+				Entity.UpdateEntites();
+
+				GameWindow.DrawPcx();
+				GameWindow.DrawFrameBuffer();
+				
+				Level.Update();
+				if (!Scene.currentScene.fading)
+				{
+					Scene.currentScene.Update();
+				}
+
+				Input.Update();
+
+				Scene.currentScene.UpdateFading();
+				GameWindow.Display();
+			}
 
 
-        }
-    }
+
+
+		}
+	}
 }
