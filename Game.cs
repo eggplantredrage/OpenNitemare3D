@@ -36,8 +36,8 @@ namespace Nitemare3D
 		public override void Update()
 		{
 			songid = music[level];
-			Entity.UpdateEntites();
-			player.RenderRaycaster();
+			//Entity.UpdateEntites();
+			//player.RenderRaycaster();
 		}
 	}
 }

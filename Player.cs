@@ -104,10 +104,10 @@ namespace Nitemare3D
                         
         }
         
-        
+        Vec2 direction = new Vec2();
         public void RenderRaycaster()
         {
-            var direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation)).Normalize();
+            //var direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation)).Normalize();
 
 
 
@@ -185,12 +185,12 @@ namespace Nitemare3D
                     if (mapX < 0 || mapY < 0) { hit = 1; break; }
                     if (mapX > 63 || mapY > 63) { hit = 1; break; }
 
-                    var wall = Level.tilemap[mapX, mapY];
+                    var wall = Level.tilemap[mapX, mapY].textureID;
                     if (wall <= 149 && wall > -1) { hit = 1; }
 
                     if (hit == 1)
                     {
-                        flipped = Level.flipped[mapX, mapY];
+                        flipped = Level.tilemap[mapX, mapY].flip;
                         this.wall = Img.current.entries[wall];
 
                     }
@@ -250,10 +250,9 @@ namespace Nitemare3D
                     }
                 }
 
-
+                var tile = Level.tilemap[mapX,mapY];
                 for (int y = drawStart; y < drawEnd; y++)
                 {
-
                     int texY = (int)texPos & (WallTextureSize - 1);
                     texPos += stepAmount;
 
@@ -283,7 +282,10 @@ namespace Nitemare3D
                 //sprite position relative to camera
                 Vec2 spritePos = sprites[spriteOrder[i]].spritePosition - position;
 
-                var sprite = sprites[i];
+                var sprite = sprites[spriteOrder[i]];
+
+                var spriteW = Img.current.entries[sprite.spriteIndex].width;
+                var spriteH = Img.current.entries[sprite.spriteIndex].height;
 
                 float invDet = 1.0f / (plane.X * direction.Y - direction.X * plane.Y);
 
@@ -292,31 +294,36 @@ namespace Nitemare3D
                 float transformY = invDet * (-plane.Y * spritePos.X + plane.X * spritePos.Y); 
 
                 int spriteScreenX = (int)((RayWidth / 2) * (1 + transformX / transformY));
+                float uDiv = (64f / spriteW);
+                float vDiv =  (64f / spriteH);
+                float vMove = (64 - spriteH);
 
-                int spriteHeight = (int)MathF.Abs((int)(RayHeight / (transformY)));
+                int vMoveScreen = (int)(vMove / transformY);
 
-                int drawStartY = -spriteHeight / 2 + RayHeight / 2;
+                int spriteHeight = (int)(MathF.Abs(RayHeight / transformY) / vDiv);
+
+                int drawStartY = -spriteHeight / 2 + RayHeight / 2 + vMoveScreen;
                 if(drawStartY < 0) drawStartY = 0;
-                int drawEndY = spriteHeight / 2 + RayHeight / 2;
+                int drawEndY = spriteHeight / 2 + RayHeight / 2 + vMoveScreen;
                 if(drawEndY >= RayHeight) drawEndY = RayHeight - 1;
-
-                int spriteWidth = (int)MathF.Abs( (int) ( RayHeight / (transformY)));
+            
+                int spriteWidth = (int)(MathF.Abs(RayHeight / transformY) / uDiv);
                 int drawStartX = -spriteWidth / 2 + spriteScreenX;
                 if(drawStartX < 0) drawStartX = 0;
                 int drawEndX = spriteWidth / 2 + spriteScreenX;
-                if(drawEndX >= RayWidth) drawEndX = RayWidth - 1;
+                if(drawEndX >= RayWidth) drawEndX = RayWidth - 1; 
 
 
-                var spriteW = Img.current.entries[sprite.spriteIndex].width;
-                var spriteH = Img.current.entries[sprite.spriteIndex].height;
+                
                 for(int stripe = drawStartX; stripe < drawEndX; stripe++)
                 {
                     int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * spriteW / spriteWidth) / 256;
-                    
+
+
                     if(transformY > 0 && stripe > 0 && stripe < RayHeight && transformY < zBuffer[stripe])
                     for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
                     {
-                        int d = (y) * 256 - RayHeight * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
+                        int d = (y-vMoveScreen) * 256 - RayHeight * 128 + spriteHeight * 128;
                         int texY = ((d * spriteH) / spriteHeight) / 256;
                         var color = Img.current.entries[sprite.spriteIndex].data[texX, texY];
 
@@ -324,6 +331,7 @@ namespace Nitemare3D
                         {
                             GameWindow.frameBuffer[8 + stripe, 4 + y] = Img.current.entries[sprite.spriteIndex].data[texX, texY];
                         }
+
                         
 
                     }
@@ -337,10 +345,15 @@ namespace Nitemare3D
                 var tileFacing = position + direction;
                 var tx = (int)tileFacing.X;
                 int ty = (int)tileFacing.Y;
-                if (Level.specialTiles[tx, ty] != null)
+
+                foreach(var entity in Entity.entities)
                 {
-                    Level.specialTiles[tx, ty].OnUse();
+                    if((int)entity.position.X == tx && (int)entity.position.Y == ty)
+                    {
+                        entity.SendMessage("OnUse");
+                    }
                 }
+                
 
             }
 
@@ -383,7 +396,6 @@ namespace Nitemare3D
 
         public Player()
         {
-            wall = Img.current.entries[1];
 
 
         }
@@ -402,9 +414,8 @@ namespace Nitemare3D
 
         public override void Update()
         {
-            //RenderRaycaster();
-            RenderWeapon();
-
+            direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation));
+            
             float oldRot = rotation;
 
             if (Input.IsKeyDown(KeyboardKey.Right))
@@ -419,10 +430,9 @@ namespace Nitemare3D
 
             if (Input.IsKeyDown(KeyboardKey.Up))
             {
-                var direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation)).Normalize();
 
 
-                position += direction * (Time.dt * walkSpeed);
+                position += direction.Normalize() * (Time.dt * walkSpeed);
 
 
 
@@ -432,6 +442,9 @@ namespace Nitemare3D
 
             plane.X = plane.X * (float)Math.Cos(rotation - oldRot) - plane.Y * (float)Math.Sin(rotation - oldRot);
             plane.Y = oldPlaneX * (float)Math.Sin(rotation - oldRot) + plane.Y * (float)Math.Cos(rotation - oldRot);
+
+            RenderRaycaster();
+            RenderWeapon();
 
 
         }
