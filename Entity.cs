@@ -52,6 +52,10 @@ namespace Nitemare3D
 
         public static void UpdateEntites()
         {
+            foreach (var entity in entities)
+            {
+                entity.Update();
+            }
             foreach (var entity in entityQueue)
             {
                 entities.Add(entity);
@@ -62,10 +66,7 @@ namespace Nitemare3D
                 entities.Remove(entity);
             }
 
-            foreach (var entity in entities)
-            {
-                entity.Update();
-            }
+            
             entityQueue.Clear();
             removeQueue.Clear();
         }

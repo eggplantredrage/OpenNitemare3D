@@ -6,6 +6,7 @@ namespace Nitemare3D
         public int ammo;
         public int fireSound;
         public float fireTime;
+        public bool hasWeapon = false;
 
 
         public abstract void Fire();
