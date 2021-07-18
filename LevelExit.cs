@@ -1,9 +1,9 @@
 using System;
 namespace Nitemare3D
 {
-    public class LevelExit : TileEntity
+    public class LevelExit : Tile
     {
-        public override void Create(int id)
+        public override void Create()
         {
         }
 
@@ -11,11 +11,6 @@ namespace Nitemare3D
         {
         }
 
-        public override void OnUse()
-        {
-            Game.level++;
-            Level.LoadMap(1, 1);
-        }
 
         public override void Update()
         {

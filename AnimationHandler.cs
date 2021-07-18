@@ -15,9 +15,9 @@ namespace Nitemare3D
         public List<AnimationFrame> frames = new List<AnimationFrame>();
         public bool loop;
 
-        public Animation(int start, int end, int duration, bool loop = true)
+        public Animation(int start, int count, int duration, bool loop = true)
         {
-            for (int i = start; i < end; i++)
+            for (int i = start; i < start + count; i++)
             {
                 AnimationFrame anim = new AnimationFrame();
                 anim.index = i;

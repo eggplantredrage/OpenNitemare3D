@@ -1,10 +1,10 @@
 namespace Nitemare3D
 {
-    public class FuseBox : TileEntity
+    public class FuseBox : Tile
     {
-        public override void Create(int id)
+        public override void Create()
         {
-            Level.tilemap[x, y] = 27;
+            Level.tilemap[x, y].textureID = 27;
         }
 
         public override void OnShoot()

@@ -34,23 +34,26 @@ namespace Nitemare3D
 
 			Scene.Start();
 
-
 			while (GameWindow.IsOpen())
 			{
 				MusicPlayer.Play(Scene.currentScene.songid);
 				Time.dt = dt.Restart().AsSeconds();
 				GameWindow.Clear();
 
+				
+				Level.Update();
+				
+				
 				Entity.UpdateEntites();
-
+				
 				GameWindow.DrawPcx();
 				GameWindow.DrawFrameBuffer();
 				
-				Level.Update();
 				if (!Scene.currentScene.fading)
 				{
 					Scene.currentScene.Update();
 				}
+				
 
 				Input.Update();
 
