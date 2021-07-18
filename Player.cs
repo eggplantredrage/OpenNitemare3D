@@ -268,7 +268,7 @@ namespace Nitemare3D
 
 
             }
-
+            
             for(int i = 0; i < spriteCount; i++)
             {
                 spriteOrder[i] = i;
@@ -306,7 +306,8 @@ namespace Nitemare3D
                 if(drawStartY < 0) drawStartY = 0;
                 int drawEndY = spriteHeight / 2 + RayHeight / 2 + vMoveScreen;
                 if(drawEndY >= RayHeight) drawEndY = RayHeight - 1;
-            
+
+
                 int spriteWidth = (int)(MathF.Abs(RayHeight / transformY) / uDiv);
                 int drawStartX = -spriteWidth / 2 + spriteScreenX;
                 if(drawStartX < 0) drawStartX = 0;
@@ -320,7 +321,7 @@ namespace Nitemare3D
                     int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * spriteW / spriteWidth) / 256;
 
 
-                    if(transformY > 0 && stripe > 0 && stripe < RayHeight && transformY < zBuffer[stripe])
+                    if(transformY > 0 && stripe > 0 && stripe < RayWidth && transformY < zBuffer[stripe])
                     for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
                     {
                         int d = (y-vMoveScreen) * 256 - RayHeight * 128 + spriteHeight * 128;
@@ -336,6 +337,7 @@ namespace Nitemare3D
 
                     }
                 }
+                
 
             }
 
@@ -430,12 +432,12 @@ namespace Nitemare3D
 
             if (Input.IsKeyDown(KeyboardKey.Up))
             {
-
-
                 position += direction.Normalize() * (Time.dt * walkSpeed);
+            }
 
-
-
+            if (Input.IsKeyDown(KeyboardKey.Down))
+            {
+                position -= direction.Normalize() * (Time.dt * walkSpeed);
             }
 
             float oldPlaneX = plane.X;
