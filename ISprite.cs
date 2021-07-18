@@ -4,5 +4,6 @@ namespace Nitemare3D
     {
         int spriteIndex{get;set;}
         Vec2 spritePosition{get;set;}
+        bool visible{get;set;}
     }
 }

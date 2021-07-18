@@ -38,8 +38,8 @@ namespace Nitemare3D
         public float rotation = 0;
 
         const int weaponCount = 4;
-        int weaponIndex = 0;
-        PlayerWeapon[] weapons = new PlayerWeapon[4]
+        public int weaponIndex = -1;
+        public PlayerWeapon[] weapons = new PlayerWeapon[4]
         {
             new PlayerPlasmaPistol(),
             new PlayerMagicWand(),
@@ -104,7 +104,7 @@ namespace Nitemare3D
                         
         }
         
-        Vec2 direction = new Vec2();
+        public Vec2 direction = new Vec2();
         public void RenderRaycaster()
         {
             //var direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation)).Normalize();
@@ -283,6 +283,7 @@ namespace Nitemare3D
                 Vec2 spritePos = sprites[spriteOrder[i]].spritePosition - position;
 
                 var sprite = sprites[spriteOrder[i]];
+                if(!sprite.visible){continue;}
 
                 var spriteW = Img.current.entries[sprite.spriteIndex].width;
                 var spriteH = Img.current.entries[sprite.spriteIndex].height;
@@ -369,16 +370,22 @@ namespace Nitemare3D
 
         void RenderWeapon()
         {
+            if(weaponIndex == -1){return;} //empty hand
             GameWindow.DrawImg(weapons[weaponIndex].texture, ImageConsts.UI_WEAPONPOSITION);
 
             GameWindow.DrawImg(ImageConsts.UI_FACE_START, ImageConsts.UI_FACEPOSITION);
 
             var input = Input.GetNumberInput();
-
+            int oldWeaponIndex = weaponIndex;
             if (input > 0 && input <= weaponCount)
             {
                 fireTimer = 0;
                 weaponIndex = input - 1;
+
+                if(!weapons[weaponIndex].hasWeapon)
+                {
+                    weaponIndex = oldWeaponIndex;
+                }
             }
 
             fireTimer += Time.dt;
@@ -432,13 +439,33 @@ namespace Nitemare3D
 
             if (Input.IsKeyDown(KeyboardKey.Up))
             {
-                position += direction.Normalize() * (Time.dt * walkSpeed);
+                if(Level.tilemap[(int)(position.X + direction.X), (int)(position.Y)].textureID == -1)
+                {
+                    position.X += direction.Normalize().X * (Time.dt * walkSpeed);
+                }
+
+                if(Level.tilemap[(int)(position.X), (int)(position.Y + direction.Y)].textureID == -1)
+                {
+                    position.Y += direction.Normalize().Y * (Time.dt * walkSpeed);
+                }
+            
             }
 
             if (Input.IsKeyDown(KeyboardKey.Down))
             {
-                position -= direction.Normalize() * (Time.dt * walkSpeed);
+                if(Level.tilemap[(int)(position.X - direction.X), (int)(position.Y)].textureID == -1)
+                {
+                    position.X -= direction.Normalize().X * (Time.dt * walkSpeed);
+                }
+
+                if(Level.tilemap[(int)(position.X), (int)(position.Y - direction.Y)].textureID == -1)
+                {
+                    position.Y -= direction.Normalize().Y * (Time.dt * walkSpeed);
+                }
+    
             }
+
+            
 
             float oldPlaneX = plane.X;
 

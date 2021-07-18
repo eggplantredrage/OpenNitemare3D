@@ -13,7 +13,7 @@ namespace Nitemare3D
 		public const int PLAYER_DIE = 42;
 		public const int GUARD_HUMAN_DIE01 = 43;
 		public const int GUARD_HUMAN_DIE02 = 44;
-		public const int GUARD_HUMANDIE03 = 45;
+		public const int GUARD_HUMAN_DIE03 = 45;
 		public const int GUARD_WITCH_DIE01 = 46;
 		public const int SND_47 = 47;
 		public const int GUARD_WITCH_ALERT01 = 48;
@@ -46,13 +46,13 @@ namespace Nitemare3D
 		public const int SND_75 = 75;
 		public const int SND_76 = 76;
 		public const int SND_77 = 77;
-		public const int SND_78 = 78;
+		public const int PICKUP_EYE = 78;
 		public const int SND_79 = 79;
 		public const int SND_80 = 80;
-		public const int SND_81 = 81;
+		public const int PICKUP_KEY = 81;
 		public const int PICKUP_WEAPON = 82;
 		public const int PICKUP_GLASSBALL = 83;
-		public const int SND_84 = 84;
+		public const int PICKUP_AMMO_PLASMA = 84;
 		public const int SND_85 = 85;
 		public const int GUARD_HUMAN_ALERT01 = 86;
 		public const int GUARD_HUMAN_ALERT02 = 87;

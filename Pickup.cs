@@ -22,6 +22,7 @@ namespace Nitemare3D
     {
 
         public int spriteIndex {get; set;}
+        public bool visible{get;set;} = true;
         public Vec2 spritePosition{get;set;} = new Vec2();
 
         AnimationHandler anim = new AnimationHandler();
@@ -70,8 +71,61 @@ namespace Nitemare3D
 
         void OnTouchPlayer()
         {
-            Entity.Remove(this);
+            switch (type)
+            {
+                case PickupType.RedKey:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_KEY);
+                    break;
+                case PickupType.GreenKey:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_KEY);
+                    break;
+                case PickupType.BlueKey:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_KEY);
+                    break;
+                case PickupType.YellowKey:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_KEY);
+                    break;
+                case PickupType.RedIDCard:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_KEY);
+                    break;
+                case PickupType.YellowIDCard:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_KEY);
+                    break;
+                case PickupType.RedPotion:
+                    break;
+                case PickupType.BluePotion:
+                    break;
+                case PickupType.Eyeball:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_EYE);
+                    break;
+                case PickupType.CrystallBall:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_GLASSBALL);
+                    break;
+                case PickupType.PlasmaPistol:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_WEAPON);
+                    Game.player.weaponIndex = 0;
+                    Game.player.weapons[0].hasWeapon = true;
+                    break;
+                case PickupType.MagicWand:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_WEAPON);
+                    Game.player.weaponIndex = 1;
+                    Game.player.weapons[1].hasWeapon = true;
+                    break;
+                case PickupType.Pistol:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_WEAPON);
+                    Game.player.weaponIndex = 2;
+                    Game.player.weapons[2].hasWeapon = true;
+                    break;
+                case PickupType.AutoPlasmaPistol:
+                    SoundEffect.PlaySound(SoundConsts.PICKUP_WEAPON);
+                    Game.player.weaponIndex = 3;
+                    Game.player.weapons[3].hasWeapon = true;
+                    break;
+            }
             
+            Entity.Remove(this);
+            visible = false;
+
         }
     }
 }

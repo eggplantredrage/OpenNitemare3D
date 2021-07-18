@@ -10,6 +10,8 @@ namespace Nitemare3D
         }
         public override void Fire()
         {
+            var p = new Projectile(Game.player.direction, ProjectileType.Plasma);
+            Entity.Add(p, Game.player.position);
         }
     }
 }
