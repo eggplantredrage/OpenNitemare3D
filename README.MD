@@ -16,7 +16,7 @@ if you for some reason want to contribute to my garbage you can join the discord
 I'm open to any help especially with reverse engineering the executable as I'm garbage at assembly,
 I also need help labeling all the sound effects
 
-if you're David P Gray please for the love of god get in contact with GOG so more people can enjoy this wonderful game
+if you're David P Gray please consider open-sourcing Nitemare 3D
 
 
 ## features:
