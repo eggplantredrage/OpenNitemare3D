@@ -423,7 +423,7 @@ namespace Nitemare3D
 
         public override void Update()
         {
-            direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation));
+            direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation)).Normalize();
             
             float oldRot = rotation;
 
@@ -441,12 +441,12 @@ namespace Nitemare3D
             {
                 if(Level.tilemap[(int)(position.X + direction.X), (int)(position.Y)].textureID == -1)
                 {
-                    position.X += direction.Normalize().X * (Time.dt * walkSpeed);
+                    position.X += direction.X * (Time.dt * walkSpeed);
                 }
 
                 if(Level.tilemap[(int)(position.X), (int)(position.Y + direction.Y)].textureID == -1)
                 {
-                    position.Y += direction.Normalize().Y * (Time.dt * walkSpeed);
+                    position.Y += direction.Y * (Time.dt * walkSpeed);
                 }
             
             }
@@ -455,12 +455,12 @@ namespace Nitemare3D
             {
                 if(Level.tilemap[(int)(position.X - direction.X), (int)(position.Y)].textureID == -1)
                 {
-                    position.X -= direction.Normalize().X * (Time.dt * walkSpeed);
+                    position.X -= direction.X * (Time.dt * walkSpeed);
                 }
 
                 if(Level.tilemap[(int)(position.X), (int)(position.Y - direction.Y)].textureID == -1)
                 {
-                    position.Y -= direction.Normalize().Y * (Time.dt * walkSpeed);
+                    position.Y -= direction.Y * (Time.dt * walkSpeed);
                 }
     
             }

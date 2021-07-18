@@ -83,7 +83,7 @@ namespace Nitemare3D
                 sequencer = new MidiFileSequencer(synthesizer);
 
                 var blockDuration = (double)synthesizer.BlockSize / synthesizer.SampleRate;
-                blocksPerBatch = (int)Math.Ceiling(0.02 / blockDuration);
+                blocksPerBatch = (int)Math.Ceiling(0.05 / blockDuration);
                 batchLength = synthesizer.BlockSize * blocksPerBatch;
                 batch = new short[2 * batchLength];
 
