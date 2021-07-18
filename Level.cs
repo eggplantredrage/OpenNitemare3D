@@ -67,12 +67,16 @@ namespace Nitemare3D
                     ent = new DumbObject(199);
                     break;
                 case ObjectType.Globeceilinglamp:
+                    ent = new DumbObject(200, true);
                     break;
                 case ObjectType.Chandelierceilinglamp:
+                    ent = new DumbObject(201, true);
                     break;
                 case ObjectType.Livingroomstandardlamp:
+                    ent = new DumbObject(202);
                     break;
                 case ObjectType.Hallstandardlamp:
+                    ent = new DumbObject(203);
                     break;
                 case ObjectType.Redpotionfullstrength:
                     break;
@@ -1011,6 +1015,7 @@ namespace Nitemare3D
             tile.textureID = texture;
             tilemap[x,y] = tile;
             tilemap[x,y].Create();
+            if(tile.textureID == -1){tile.obstacle = false;}
             HandleFlip(x, y);
         }
 

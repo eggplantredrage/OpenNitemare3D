@@ -31,7 +31,7 @@ namespace Nitemare3D
         public int health = 100;
 
 
-        public Vec2 plane = new Vec2(0, 0.66f);
+        public Vec2 plane = new Vec2(0, .8f);
 
         float walkSpeed = 3;
         float runSpeed = 5;
@@ -105,6 +105,19 @@ namespace Nitemare3D
         }
         
         public Vec2 direction = new Vec2();
+
+        bool lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+
+            // calculate the direction of the lines
+            float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+            float uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+
+            // if uA and uB are between 0-1, lines are colliding
+            if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+                return true;
+            }
+            return false;
+        }
         public void RenderRaycaster()
         {
             //var direction = new Vec2(MathF.Cos(rotation), MathF.Sin(rotation)).Normalize();
@@ -140,6 +153,19 @@ namespace Nitemare3D
                 int hit = 0; 
                 int side = 0;
 
+
+                /*
+                    side 0:
+                                
+                        #-#
+
+                    side 1:
+
+                        #
+                        |
+                        #
+                */
+
                 if (rayDirX < 0)
                 {
                     step.X = -1;
@@ -162,7 +188,8 @@ namespace Nitemare3D
                 }
 
 
-                //weird DDA algorithm that I don't understand
+                //DDA algirtrhtn
+                float ThinCNT = 0;
                 while (hit == 0)
                 {
                     if (sideDist.X < sideDist.Y)
@@ -191,7 +218,16 @@ namespace Nitemare3D
                     if (hit == 1)
                     {
                         flipped = Level.tilemap[mapX, mapY].flip;
+
+                        var hitWall = Level.tilemap[mapX, mapY];
+                        
+
+                        
+
                         this.wall = Img.current.entries[wall];
+                        
+
+                        
 
                     }
 
@@ -296,8 +332,8 @@ namespace Nitemare3D
 
                 int spriteScreenX = (int)((RayWidth / 2) * (1 + transformX / transformY));
                 float uDiv = (64f / spriteW);
-                float vDiv =  (64f / spriteH);
-                float vMove = (64 - spriteH);
+                float vDiv = (64f / spriteH);
+                float vMove = (64-spriteH) - sprite.yOffset;
 
                 int vMoveScreen = (int)(vMove / transformY);
 
@@ -439,12 +475,12 @@ namespace Nitemare3D
 
             if (Input.IsKeyDown(KeyboardKey.Up))
             {
-                if(Level.tilemap[(int)(position.X + direction.X), (int)(position.Y)].textureID == -1)
+                if(!Level.tilemap[(int)(position.X + direction.X), (int)(position.Y)].obstacle)
                 {
                     position.X += direction.X * (Time.dt * walkSpeed);
                 }
 
-                if(Level.tilemap[(int)(position.X), (int)(position.Y + direction.Y)].textureID == -1)
+                if(!Level.tilemap[(int)(position.X), (int)(position.Y + direction.Y)].obstacle)
                 {
                     position.Y += direction.Y * (Time.dt * walkSpeed);
                 }

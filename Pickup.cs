@@ -24,7 +24,7 @@ namespace Nitemare3D
         public int spriteIndex {get; set;}
         public bool visible{get;set;} = true;
         public Vec2 spritePosition{get;set;} = new Vec2();
-
+        public float yOffset{get;set;}
         AnimationHandler anim = new AnimationHandler();
 
 

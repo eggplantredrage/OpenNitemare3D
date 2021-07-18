@@ -10,6 +10,7 @@ namespace Nitemare3D
     public class Tile
     {
         public int textureID = -1;
+        public bool obstacle = true;
         public bool thin = false;
         public bool door = false;
         public byte x,y;

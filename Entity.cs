@@ -10,6 +10,11 @@ namespace Nitemare3D
 
         }
 
+        public virtual void Start()
+        {
+
+        }
+
 
         public static List<Entity> entities = new List<Entity>();
         static List<Entity> entityQueue = new List<Entity>();
@@ -58,6 +63,7 @@ namespace Nitemare3D
             }
             foreach (var entity in entityQueue)
             {
+                entity.Start();
                 entities.Add(entity);
             }
 
