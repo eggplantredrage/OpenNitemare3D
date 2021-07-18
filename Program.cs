@@ -36,7 +36,7 @@ namespace Nitemare3D
 
 			while (GameWindow.IsOpen())
 			{
-				//MusicPlayer.Play(Scene.currentScene.songid);
+				MusicPlayer.Play(Scene.currentScene.songid);
 				Time.dt = dt.Restart().AsSeconds();
 				GameWindow.Clear();
 
