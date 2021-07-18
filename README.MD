@@ -6,7 +6,9 @@ reimplementation of the 1994 FPS Nitemare 3D in C#
 
 [![Showcase](https://yt-embed.herokuapp.com/embed?v=KLNquQF4iJo)](https://www.youtube.com/watch?v=KLNquQF4iJo-Y "fucking uhhh")
 
-
+# how to compile:
+open the folder in vscode and press 'F5', you'll need the DotNet SDK
+this will compile and run fine on anything with DotNet and SFML
 
 # how to install:
 you will need to get the original game files, I reccomend just getting them from archive.org since the [version on David Gray's website](https://www.dgray.com/n3dpage.htm) is newer and has unsupported file types, however you will need to get SND.DAT from the newer version as the old version uses unsupported .VOC sounds [archive to newer version(you only need SND.DAT)](https://archive.org/download/win3_Nite3d3x/win3_Nite3d3x.zip), place SND.DAT(windows version!!!), UIF.DAT MAP.1, IMG.1, and GAME.PAL in bin/Debug/net5.0/data, then you can just launch the executable, it's untested on Windows but it should probably work since it's DotNet, you will probably need to download SFML binaries
