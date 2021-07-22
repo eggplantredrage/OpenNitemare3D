@@ -36,7 +36,7 @@ namespace Nitemare3D
 		public const int WEAPON_PLASMA = 65;
 		public const int GUARD_BAT_ALERT = 66;
 		public const int GUARD_BAT_DIE = 67;
-		public const int SND_68 = 68;
+		public const int GUARD_SKELETON_ATTACK = 68;
 		public const int CURTAIN_OPEN = 69;
 		public const int CURTAIN_CLOSE = 70;
 		public const int HIDDENPANEL_OPEN = 71;
@@ -58,14 +58,14 @@ namespace Nitemare3D
 		public const int GUARD_HUMAN_ALERT02 = 87;
 		public const int GUARD_MONSTER_ALERT01 = 88;
 		public const int GUARD_MONSTER_ALERT02 = 89;
-		public const int GUARD_HUMAN_ALERT03 = 90;
-		public const int SND_91 = 91;
+		public const int GUARD_MONSTER_ALERT03 = 90;
+		public const int GUARD_SKELETON_ALERT = 91;
 		public const int SND_92 = 92;
 		public const int SND_93 = 93;
 		public const int SND_94 = 94;
 		public const int SND_95 = 95;
 		public const int SND_96 = 96;
-		public const int SND_97 = 97;
+		public const int ATTACK_FRANKENSTEIN = 97;
 		public const int SND_98 = 98;
 		public const int SND_99 = 99;
 		public const int LEVEL_END = 100;

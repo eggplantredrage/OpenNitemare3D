@@ -8,7 +8,7 @@ namespace Nitemare3D
     public class SoundEffect
     {
         const int sampleRate = 10989;
-        const int volumeModifier = 80;
+        const int volumeModifier = 120;
         Sound sound;
         public const int soundOffset = 34;//everything before that is midi or blank(idk why there's blank entries)
 
@@ -16,6 +16,8 @@ namespace Nitemare3D
 
         public static void PlaySound(int id)
         {
+            if(effects[id - soundOffset].sound == null){return;}
+            if(effects[id - soundOffset].sound.Status == SoundStatus.Playing){return;}
             effects[id - soundOffset].Play();
         }
 

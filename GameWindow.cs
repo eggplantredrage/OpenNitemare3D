@@ -7,21 +7,46 @@ namespace Nitemare3D
 {
     public static class GameWindow
     {
-        public const int width = 320;
-        public const int height = 200;
-        static Image renderTarget = new Image(width, height);
+        public static uint width = 320;
+        public static uint height = 200;
+        static Image renderTarget;
+        public static float scale;
 
         public static byte[] pal = new byte[1924];
         static Text sfText = new Text("DEBUG", new Font("data/FFFFORWA.TTF"), 7);
 
-        public static byte[,] frameBuffer = new byte[width, height];
-        public static RenderWindow sfWindow = new RenderWindow(new VideoMode(320, 240), "Nitemare 3D");
+        public static byte[,] frameBuffer;
+        public static RenderWindow sfWindow;
+        static RectangleShape rect;
 
         public static void Init()
         {
-            sfWindow.SetFramerateLimit(30);
+
+            //load config
+            var config = File.ReadAllLines("config.ini");
+            width = uint.Parse(config[0]);
+            uint fps = uint.Parse(config[1]);
+
+            height = (uint)(width / 1.6f);
+
+            //to simulate tall pixels
+            uint winHeight = (uint)(height * 1.2f);
+            
+            scale = width / 320;
+            
+            //init window
+            sfWindow = new RenderWindow(new VideoMode(width, winHeight), Game.gameTitle);
+            renderTarget = new Image(width, height);
+            sfWindow.SetFramerateLimit(fps);
             sfWindow.Closed += (sender, e) => sfWindow.Close();
             sfWindow.Resized += (sender, e) => PreserveAspectRatio();
+
+            rect = new RectangleShape(new Vector2f(width, winHeight));
+
+            //init framebuffer
+            frameBuffer = new byte[width, height];
+
+
 
             //load pal
             BinaryReader reader = new BinaryReader(File.OpenRead("data/GAME.PAL"));
@@ -54,8 +79,9 @@ namespace Nitemare3D
         //todo: bitmap fonts
         public static void DrawText(uint x, uint y, string text, int color)
         {
-            sfText.Position = new Vector2f(x, y);
+            sfText.Position = new Vector2f(x, y) * scale;
             sfText.DisplayedString = text;
+            sfText.Scale = new Vector2f(scale, scale);
             var r = pal[3 * (color)];
             var g = pal[3 * (color) + 1];
             var b = pal[3 * (color) + 2];
@@ -64,7 +90,7 @@ namespace Nitemare3D
             sfText.FillColor = new Color(r, g, b);
             sfWindow.Draw(sfText);
         }
-        static RectangleShape rect = new RectangleShape(new Vector2f(320, 240));
+        
 
         public static void Clear()
         {
@@ -83,9 +109,9 @@ namespace Nitemare3D
 
         public static void DrawFrameBuffer()
         {
-            for (int x = 0; x < 320; x++)
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < 200; y++)
+                for (int y = 0; y < height; y++)
                 {
                     var i = frameBuffer[x, y];
                     if (i == 0) { continue; }
@@ -93,6 +119,8 @@ namespace Nitemare3D
                     var g = pal[3 * (i) + 1];
                     var b = pal[3 * (i) + 2];
                     renderTarget.SetPixel((uint)x, (uint)y, new Color(r, g, b));
+                
+                    
                 }
             }
             sfWindow.Draw(rect);
@@ -152,7 +180,14 @@ namespace Nitemare3D
                     var i = img.data[tx, ty];
                     if (i == 31) { continue; } //white is transparent
 
-                    frameBuffer[tx + position.X, ty + position.Y] = i;
+
+                    for(int px = (int)(tx * scale); px < (int)(tx * scale + scale); px++)
+                    {
+                        for(int py = (int)(ty * scale); py < (int)(ty * scale + scale); py++)
+                        {
+                            frameBuffer[(int)(position.X * scale) + px, (int)(position.Y * scale) + py] = i;
+                        }
+                    }
 
                 }
             }
@@ -167,7 +202,14 @@ namespace Nitemare3D
                 {
                     var i = Scene.currentScene.pcx.ImageData[x, y];
                     if (i == 0) { continue; } //don't draw black pixels
-                    frameBuffer[x,y] = i;
+
+                    for(int px = (int)(x * scale); px < (int)(x * scale + scale); px++)
+                    {
+                        for(int py = (int)(y * scale); py < (int)(y * scale + scale); py++)
+                        {
+                            frameBuffer[px,py] = i;
+                        }
+                    }
                 }
             }
         }

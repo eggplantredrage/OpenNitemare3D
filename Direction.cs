@@ -3,8 +3,12 @@ namespace Nitemare3D
     public enum Direction //never eat soggy waffles
     {
         North,
+        NorthEast,
         East,
+        SouthEast,
         South,
-        West
+        SouthWest,
+        West,
+        NorthWest
     }
 }

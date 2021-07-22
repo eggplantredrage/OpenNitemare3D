@@ -51,8 +51,8 @@ namespace Nitemare3D
 
         const int WallTextureSize = 64;
 
-        const int RayHeight = 152;
-        const int RayWidth = 304;
+        int RayHeight = 152;
+        int RayWidth = 304;
         int spriteCount = 0;
         const int maxSprites = 4096;
         public void AddSprite(ISprite sprite)
@@ -66,10 +66,21 @@ namespace Nitemare3D
             spriteCount++;
         }
 
+        public override void Start()
+        {
+            weapons[0].hasWeapon = true;
+
+            RayWidth  = (int)(RayWidth * GameWindow.scale);
+            RayHeight  = (int)(RayHeight * GameWindow.scale);
+            
+            zBuffer = new float[RayWidth];
+            hasCollision = false;
+        }
+
         ISprite[] sprites = new ISprite[maxSprites];        
         int[] spriteOrder = new int[maxSprites];
         float[] spriteDistance = new float[maxSprites];
-        float[] zBuffer = new float[RayWidth];
+        float[] zBuffer;
 
 
         class DecendingComparer<TKey>: IComparer<float>
@@ -333,7 +344,7 @@ namespace Nitemare3D
                 int spriteScreenX = (int)((RayWidth / 2) * (1 + transformX / transformY));
                 float uDiv = (64f / spriteW);
                 float vDiv = (64f / spriteH);
-                float vMove = (64-spriteH) - sprite.yOffset;
+                float vMove = ((64-spriteH) - sprite.yOffset) * GameWindow.scale;
 
                 int vMoveScreen = (int)(vMove / transformY);
 
@@ -475,15 +486,21 @@ namespace Nitemare3D
 
             if (Input.IsKeyDown(KeyboardKey.Up))
             {
-                if(!Level.tilemap[(int)(position.X + direction.X), (int)(position.Y)].obstacle)
+                var x = (int)(position.X + direction.X);
+                var y = (int)position.Y;
+                if(Level.IsWalkable(x, y, this))
                 {
                     position.X += direction.X * (Time.dt * walkSpeed);
                 }
+                
+                y = (int)(position.Y + direction.Y);
+                x = (int)position.X;
 
-                if(!Level.tilemap[(int)(position.X), (int)(position.Y + direction.Y)].obstacle)
+                if(Level.IsWalkable(x, y, this))
                 {
                     position.Y += direction.Y * (Time.dt * walkSpeed);
                 }
+
             
             }
 

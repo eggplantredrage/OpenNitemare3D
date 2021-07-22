@@ -11,7 +11,7 @@ namespace Nitemare3D
 			MidiConsts.MIDI_E1M1,
 			MidiConsts.MIDI_INTERMISSION
 		};
-
+		public const string gameTitle = "Nitemare 3D 0.46";
 		
 
 

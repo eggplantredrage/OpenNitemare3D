@@ -67,10 +67,10 @@ namespace Nitemare3D
                     ent = new DumbObject(199);
                     break;
                 case ObjectType.Globeceilinglamp:
-                    ent = new DumbObject(200, true);
+                    ent = new DumbObject(200, true, false);
                     break;
                 case ObjectType.Chandelierceilinglamp:
-                    ent = new DumbObject(201, true);
+                    ent = new DumbObject(201, true, false);
                     break;
                 case ObjectType.Livingroomstandardlamp:
                     ent = new DumbObject(202);
@@ -288,36 +288,52 @@ namespace Nitemare3D
                 case ObjectType.VampiraW:
                     break;
                 case ObjectType.Baddie1NBluecoat:
+                    ent = new DirectionalGuard(GuardType.HumanBlue, Direction.North);
                     break;
                 case ObjectType.Baddie1E:
+                    ent = new DirectionalGuard(GuardType.HumanBlue, Direction.East);
                     break;
                 case ObjectType.Baddie1S:
+                    ent = new DirectionalGuard(GuardType.HumanBlue, Direction.South);
                     break;
                 case ObjectType.Baddie1W:
+                    ent = new DirectionalGuard(GuardType.HumanBlue, Direction.West);
                     break;
                 case ObjectType.Baddie1MN:
+                    ent = new DirectionalGuard(GuardType.HumanBlue, Direction.North);
                     break;
                 case ObjectType.Baddie1ME:
+                    ent = new DirectionalGuard(GuardType.HumanBlue, Direction.East);
                     break;
                 case ObjectType.Baddie1MS:
+                    ent = new DirectionalGuard(GuardType.HumanBlue, Direction.South);
                     break;
                 case ObjectType.Baddie1MW:
+                    ent = new DirectionalGuard(GuardType.HumanBlue, Direction.West);
                     break;
                 case ObjectType.Baddie2NGreencoat:
+                    ent = new DirectionalGuard(GuardType.HumanGreen, Direction.North);
                     break;
                 case ObjectType.Baddie2E:
+                    ent = new DirectionalGuard(GuardType.HumanGreen, Direction.East);
                     break;
                 case ObjectType.Baddie2S:
+                    ent = new DirectionalGuard(GuardType.HumanGreen, Direction.South);
                     break;
                 case ObjectType.Baddie2W:
+                    ent = new DirectionalGuard(GuardType.HumanGreen, Direction.West);
                     break;
                 case ObjectType.Baddie2MN:
+                    ent = new DirectionalGuard(GuardType.HumanGreen, Direction.North);
                     break;
                 case ObjectType.Baddie2ME:
+                    ent = new DirectionalGuard(GuardType.HumanGreen, Direction.East);
                     break;
                 case ObjectType.Baddie2MS:
+                    ent = new DirectionalGuard(GuardType.HumanGreen, Direction.South);
                     break;
                 case ObjectType.Baddie2MW:
+                    ent = new DirectionalGuard(GuardType.HumanGreen, Direction.West);
                     break;
                 case ObjectType.DraculaN:
                     break;
@@ -451,7 +467,7 @@ namespace Nitemare3D
 
         }
 
-        static public void CreateTile(int x, int y, int id)
+        public static void CreateTile(int x, int y, int id)
         {
             
             Tile tile = new Tile();
@@ -1012,6 +1028,7 @@ namespace Nitemare3D
             }
             tile.x = (byte)x;
             tile.y = (byte)y;
+            tile.type = type;
             tile.textureID = texture;
             tilemap[x,y] = tile;
             tilemap[x,y].Create();
@@ -1020,6 +1037,30 @@ namespace Nitemare3D
         }
 
 
+        //TODO: make entity collision detection less garbage
+        public static bool IsWalkable(int x, int y, Entity ent)
+        {
+            if(x < 0 || x > 63 || y < 0 || y > 64){return false;}
+            bool isEntity = false;
+            foreach(var entity in Entity.entities)
+            {
+                var ex = (int)MathF.Round(entity.position.X);
+                var ey = (int)MathF.Round(entity.position.Y);
+                if(entity.id == ent.id){continue;} //dont want to check collision on ourselves!
+
+                
+                if (x == ex && ey == y)
+                {
+                    if(entity.hasCollision)
+                    {
+                        isEntity = true;
+                        break;
+                    }
+                }
+
+            }
+            return ((tilemap[x,y].textureID == -1)) && !isEntity;
+        }
 
         public static void LoadMap(int id, int episode)
         {

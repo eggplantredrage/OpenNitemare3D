@@ -17,9 +17,11 @@ namespace Nitemare3D
         public bool flip = false;
         float openAmount = 0;
         public TileState state = TileState.solid;
+        public WallType type;
         
         public void UpdateDoorState()
         {
+            
             switch (state)
             {
                 case TileState.solid:

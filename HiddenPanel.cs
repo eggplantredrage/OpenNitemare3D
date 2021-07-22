@@ -9,6 +9,7 @@ namespace Nitemare3D
             current = Level.tilemap[(int)position.X, (int)position.Y];
             current.thin = true;
             GetNeighbor();
+            hasCollision = false;
         }
 
         void GetNeighbor() //checks if this is a double wide door

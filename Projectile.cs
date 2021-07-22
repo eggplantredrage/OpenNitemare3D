@@ -1,3 +1,4 @@
+using System;
 namespace Nitemare3D
 {
     public enum ProjectileType
@@ -29,9 +30,9 @@ namespace Nitemare3D
         {
             this.direction = direction;
             this.type = type;
-            anim.index = animations[(int)type].frames[0].index;
-            anim.current = animations[(int)type];
+            anim.LoadAnimation(animations[(int)type]);
             Game.player.AddSprite(this);
+            hasCollision = false;
         }
 
         public override void Update()
@@ -40,6 +41,28 @@ namespace Nitemare3D
             position += direction * speed * Time.dt;
             spritePosition = position;
             spriteIndex = anim.index;
+
+            bool delete = false;
+
+            
+            foreach(var entity in entities)
+            {
+                if(entity.id == id || entity.id == Game.player.id){continue;}
+                if(entity.position.Rounded().Equals(position.Rounded()))
+                {
+                    delete = entity.hasCollision;
+                    entity.SendMessage("ShootPlasma");
+                    return;
+                }
+            }
+
+            if(!Level.IsWalkable((int)position.X, (int)position.Y, this))
+            {
+                delete = true;
+            }
+
+            if(delete){Entity.Remove(this); visible = false;}
+
         }
     }
 }

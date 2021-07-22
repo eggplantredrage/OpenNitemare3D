@@ -48,6 +48,10 @@ namespace Nitemare3D
             return false;
         }
 
+        public Vec2 Rounded()
+        {
+            return new Vec2(MathF.Round(X), MathF.Round(Y));
+        }        
 
         public static Vec2 Down
         {
@@ -82,7 +86,7 @@ namespace Nitemare3D
         public override bool Equals(object obj)
         {
             var vec = obj as Vec2;
-            return (vec.X == X && vec.Y == Y);
+            return (int)vec.X == (int)X && (int)vec.Y == (int)Y;
         }
 
 
@@ -115,6 +119,31 @@ namespace Nitemare3D
         public static Vec2 operator /(Vec2 A, Vec2 B)
         {
             return new Vec2(A.X / B.X, A.Y / B.Y);
+        }
+
+        public static Vec2 operator *(Vec2 A, Vec2 B)
+        {
+            return new Vec2(A.X * B.X, A.Y * B.Y);
+        }
+
+        public static Vec2 operator +(Vec2 A, Vec2i B)
+        {
+            return new Vec2(A.X + B.X, A.Y + B.Y);
+        }
+
+        public static Vec2 operator -(Vec2 A, Vec2i B)
+        {
+            return new Vec2(A.X - B.X, A.Y - B.Y);
+        }
+
+        public static Vec2 operator /(Vec2 A, Vec2i B)
+        {
+            return new Vec2(A.X / B.X, A.Y / B.Y);
+        }
+
+        public static Vec2 operator *(Vec2 A, Vec2i B)
+        {
+            return new Vec2(A.X * B.X, A.Y * B.Y);
         }
 
         public static Vec2 operator /(Vec2 A, float B)
@@ -159,6 +188,12 @@ namespace Nitemare3D
                                 Origin.X + c * Point.X - s * Point.Y,
                                 Origin.Y + s * Point.X + c * Point.Y
             ) - Origin * 2;
+        }
+
+        internal static float Dot(Vec2 a, Vec2 b)
+        {
+            return (a.X * b.X) + (a.Y * b.Y);
+
         }
 
         public static float Magnitude(Vec2 A)

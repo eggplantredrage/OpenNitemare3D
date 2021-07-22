@@ -36,7 +36,26 @@ namespace Nitemare3D
 				names[index] = name;
 			}
 			GameWindow.DrawText(0, 230, "Press F5 to save, F1 to exit", 31);
-			name += Input.text;
+
+			if(inputTimer > inputTime)
+			{
+				if(Input.text.Length > 0)
+				{
+					inputTimer = 0;
+				}
+				name += Input.text;
+			}
+
+			if(Input.text.Length > 0)
+			{
+				if(inputTimer > inputTime)
+				{
+					name += Input.text;
+					inputTimer = 0;
+				}
+			}
+			
+			
 
 
 			inputTimer += Time.dt;

@@ -397,3 +397,4 @@ FodyWeavers.xsd
 *.PAL
 *.exe
 *.pdb
+bin/

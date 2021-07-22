@@ -5,6 +5,8 @@ namespace Nitemare3D
     public class Entity
     {
         public Vec2 position = new Vec2();
+        public int id;
+        static int entCount;
         public virtual void Update()
         {
 
@@ -14,6 +16,8 @@ namespace Nitemare3D
         {
 
         }
+
+        public bool hasCollision = true;
 
 
         public static List<Entity> entities = new List<Entity>();
@@ -63,6 +67,8 @@ namespace Nitemare3D
             }
             foreach (var entity in entityQueue)
             {
+                entity.id = entCount;
+                entCount++;
                 entity.Start();
                 entities.Add(entity);
             }

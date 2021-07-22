@@ -7,8 +7,7 @@ namespace Nitemare3D
         int startSprite;
         public AnimatedWall(int start, int count)
         {
-            anim.current = new Animation(start, count, 1000 / count);
-            anim.index = start;
+            anim.LoadAnimation(new Animation(start, count, 1000 / count));
         }
         public override void Create()
         {

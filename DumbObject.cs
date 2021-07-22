@@ -8,7 +8,7 @@ namespace Nitemare3D
         public bool visible{get;set;} = true;
         public float yOffset{get;set;}
         public bool raised = false;
-        public DumbObject(int index, bool raised = false)
+        public DumbObject(int index, bool raised = false, bool hasCollision = true)
         {
             spriteIndex = index;
             Game.player.AddSprite(this);
@@ -18,6 +18,7 @@ namespace Nitemare3D
             {
                 yOffset = 64 + Img.current.entries[index].height;
             }
+            this.hasCollision = hasCollision;
         }
 
 

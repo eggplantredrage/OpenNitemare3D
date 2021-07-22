@@ -52,9 +52,42 @@ namespace Nitemare3D
         public Pickup(PickupType type)
         {
             this.type = type;
-            anim.current = animations[(int)type];
+            anim.LoadAnimation(animations[(int)type]);
             Game.player.AddSprite(this);
             anim.index = animations[(int)type].frames[0].index;
+            hasCollision = false;
+            switch (type)
+            {
+                case PickupType.RedKey:
+                    break;
+                case PickupType.GreenKey:
+                    break;
+                case PickupType.BlueKey:
+                    break;
+                case PickupType.YellowKey:
+                    break;
+                case PickupType.RedIDCard:
+                    break;
+                case PickupType.YellowIDCard:
+                    break;
+                case PickupType.RedPotion:
+                    break;
+                case PickupType.BluePotion:
+                    break;
+                case PickupType.Eyeball:
+                    yOffset = 32;
+                    break;
+                case PickupType.CrystallBall:
+                    break;
+                case PickupType.PlasmaPistol:
+                    break;
+                case PickupType.MagicWand:
+                    break;
+                case PickupType.Pistol:
+                    break;
+                case PickupType.AutoPlasmaPistol:
+                    break;
+            }
         }
 
         public override void Update()
