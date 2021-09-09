@@ -57,7 +57,7 @@ void R_DrawPCX(SDL_Renderer* renderer)
     src.x = 0;
     src.y = 0;
     dst.w = PCX_WIDTH;
-    dst.h = PCX_HEIGHT;
+    dst.h = 240;
     dst.x = 0;
     dst.y = 0;
     

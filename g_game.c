@@ -11,7 +11,7 @@ void G_Init(struct g_game* game)
     //G_LoadEpisode(0);
     //G_LoadLevel(0);
 
-    I_ChangeSong(14);
+    I_ChangeSong(0);
     I_PlayMusic();
 }
 
