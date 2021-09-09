@@ -7,6 +7,13 @@ uint32_t I_ReadUint32(FILE* file)
     return out;
 }
 
+void I_DumpBinary(byte* data, int length, char filename[256])
+{
+    FILE* file = fopen(filename, "wb");
+    fwrite(data, length, 1, file);
+    fclose(file);
+}
+
 uint16_t I_ReadUint16(FILE* file)
 {
     uint16_t out;

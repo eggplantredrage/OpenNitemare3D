@@ -9,5 +9,6 @@ void I_InitMusic();
 void I_PauseMusic();
 void I_PlayMusic();
 void I_ChangeSong(int id);
+void I_SetVolume(byte volume);
 
 #endif

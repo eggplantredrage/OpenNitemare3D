@@ -9,6 +9,7 @@ uint16_t I_ReadUint16(FILE* file);
 byte I_ReadByte(FILE* file);
 byte* I_ReadBytes(FILE* file, uint16_t count);
 void I_Close(FILE* file);
+void I_DumpBinary(byte* data, int length, char filename[256]);
 uint32_t I_GetPosition(FILE* file);
 
 #endif

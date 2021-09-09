@@ -3,6 +3,8 @@
 
 #include "r_renderer.h"
 #include "r_ui.h"
+#include "g_gamestate.h"
+#include "m_obj.h"
 #define LEVEL_SIZE 64
 
 typedef struct g_game
@@ -13,6 +15,8 @@ typedef struct g_game
     uint8_t map;
     uint8_t mapcount;
     uint8_t mapdata[LEVEL_SIZE*LEVEL_SIZE];
+    m_obj* player;
+    g_gamestate state;
 }g_game;
 
 g_game* game;

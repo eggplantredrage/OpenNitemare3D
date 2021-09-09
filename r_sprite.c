@@ -9,7 +9,7 @@ struct r_sprite* R_CreateSprite(byte width, byte height, byte* pixels)
 {
     struct r_sprite* sprite = (r_sprite*)malloc(sizeof(r_sprite));
     //assert(sizeof(pixels) == width*height);
-    //sprite->pixels = pixels;
+    sprite->data = pixels;
     sprite->width = width;
     sprite->height = height;
 }

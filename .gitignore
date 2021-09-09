@@ -1,5 +1,7 @@
 *.DAT
 *.PAL
+*.png
+*.bin
 IMG.*
 MAP.*
 DEMO.*
