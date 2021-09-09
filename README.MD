@@ -4,6 +4,8 @@ reimplementation of the 1994 FPS Nitemare 3D in C#
 [Discord](https://discord.gg/pr36YJ9Njw).
 [Tumblr](https://www.tumblr.com/blog/bbqgiraffe).
 
+# this is currently being rewritten in C for performance reasons, active development branch is C-Rewrite
+
 [![Showcase](https://yt-embed.herokuapp.com/embed?v=KLNquQF4iJo)](https://www.youtube.com/watch?v=KLNquQF4iJo-Y "fucking uhhh")
 
 # how to compile:
