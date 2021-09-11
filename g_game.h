@@ -1,29 +1,22 @@
 #ifndef G_GAME
 #define G_GAME
-
-#include "r_renderer.h"
+#include "typedefs.h"
+#include "pcx.h"
 #include "r_ui.h"
-#include "g_gamestate.h"
-#include "m_obj.h"
-#define LEVEL_SIZE 64
+#include "g_game.h"
+#include "m_maptype.h"
+#include "i_keyboard.h"
+#include "g_info.h"
+#include "r_main.h"
+#define MAP_OFFSET 514;
+uint16_t R_PlayerFace;
 
-typedef struct g_game
-{
-    uint8_t spriteCount;
-    uint8_t midi;
-    uint8_t episode;
-    uint8_t map;
-    uint8_t mapcount;
-    uint8_t mapdata[LEVEL_SIZE*LEVEL_SIZE];
-    m_obj* player;
-    g_gamestate state;
-}g_game;
 
-g_game* game;
-void G_ChanceSong(uint8_t midi);
+bool G_GameIsDone();
+void G_ShowWalls();
+void G_CreateMapObject(byte id, byte x, byte y);
 void G_LoadEpisode(uint8_t episode);
 void G_LoadLevel(uint8_t level);
-void G_UpdateGame();
-void G_Init();
-
-#endif
+void G_StartMainGame();
+void G_UpdateMainGame();
+#endif  

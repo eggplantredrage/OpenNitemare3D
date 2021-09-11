@@ -1,1 +1,0 @@
-void G_UpdateMenu();

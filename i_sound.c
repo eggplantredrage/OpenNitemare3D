@@ -24,7 +24,9 @@ void I_PlayMusic()
 
 void I_ChangeSong(int id)
 {
+    Mix_FreeMusic(current_midi);
     SDL_RWops* data = SDL_RWFromMem(SND.entries[id+1].data, SND.entries[+1].length);
     current_midi = Mix_LoadMUS_RW(data, 1);
-    //SDL_FreeRW(data);
+    printf("midi:%d\n", current_midi);
+    I_PlayMusic();
 }

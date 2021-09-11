@@ -1,3 +1,5 @@
+#ifndef G_GAMESTATE
+#define G_GAMESTATE
 typedef enum g_gamestate
 {
     GAMESTATE_STARTSCREEN,
@@ -13,3 +15,4 @@ typedef enum g_gamestate
     GAMESTATE_LEVELCOMPLETE,
     GAMESTATE_ORDERNOW
 }g_gamestate;
+#endif

@@ -2,7 +2,7 @@
 
 void R_LoadPCXFiles(SDL_Renderer* renderer)
 {
-    for(int i = 0; i <= 12; i++)
+    for(int i = 0; i < 14; i++)
     {
         SDL_RWops* data = SDL_RWFromMem(UIF.entries[i+3].data, UIF.entries[i+3].length);
         SDL_Surface* surface = IMG_LoadPCX_RW(data);
@@ -16,7 +16,7 @@ void R_LoadPCXFiles(SDL_Renderer* renderer)
         SDL_FreeSurface(surface);
 
         uitexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 320, 200);
-        SDL_SetTextureBlendMode(uitexture, SDL_BLENDMODE_BLEND);
+        SDL_SetTextureBlendMode(uitexture, SDL_BLENDMODE_ADD);
     }
 
 
@@ -35,22 +35,24 @@ void R_FreePCX(pcx tobefreed)
 
 void R_InitUI()
 {
-    R_PlayerFace = 822;
 }
 
 void R_DrawUI(SDL_Renderer* renderer)
 {
     R_DrawPCX(renderer);
     R_DrawUISprites(renderer);
-
+    
     for(int x = 0; x < 320; x++)
     {
         for(int y = 0; y < 200; y++)
         {
-            byte pixel = uiframebuffer[x][y];
+            byte i = uiframebuffer[x][y];
             byte r, g, b, a;
-            R_GetColor(pixel, &r, &g, &b);
-            a = (pixel == 0) ? 0 : 255;
+            r = palette[i * 3];
+            g = palette[(i * 3) + 1];
+            b = palette[(i * 3) + 2];
+
+            a = (i == 0) ? 0 : 255;
 
             uitexturebuffer[4 * (x + y * 320)] = r;
             uitexturebuffer[4 * (x + y * 320) + 1] = g;
@@ -70,13 +72,6 @@ void R_DrawUI(SDL_Renderer* renderer)
 
 void R_ClearUI()
 {
-    for(int x = 0; x < 320; x++)
-    {
-        for(int y = 0; y < 200; y++)
-        {
-            uiframebuffer[x][y] = 0;
-        }
-    }
 }
 
 void R_DrawSprite(int x, int y, r_sprite sprite)
@@ -92,7 +87,7 @@ void R_DrawSprite(int x, int y, r_sprite sprite)
 
 void R_DrawUISprites(SDL_Renderer* renderer)
 {
-    R_DrawSprite(3 ,162, sprites[822]);
+    
 }
 
 void R_DrawUIText(SDL_Renderer* renderer)

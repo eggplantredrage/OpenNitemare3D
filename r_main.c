@@ -1,4 +1,4 @@
-#include "r_renderer.h"
+#include "r_main.h"
 
 void R_Init()
 {
@@ -8,7 +8,7 @@ void R_Init()
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND)
 ;    R_isopen = true;
     R_LoadPalette();
-    R_LoadSprites(1);
+    R_InitUI();
 }
 
 void R_DumpSprites()
@@ -26,10 +26,11 @@ void R_DumpSprites()
             byte r, g, b;
             R_GetColor(pixel, &r, &g, &b);
 
-            buffer[j * (4)] = b;
-            buffer[j * (4) + 1] = g;
-            buffer[j * (4) + 2] = r;
-            buffer[j * (4) + 3] = 255;
+            int buffoff = j * 4;
+            buffer[buffoff] = b;
+            buffer[buffoff + 1] = g;
+            buffer[buffoff + 2] = r;
+            buffer[buffoff + 3] = 255;
         }
        
         char* filename[256];
@@ -43,19 +44,7 @@ void R_DumpSprites()
 
 void R_DrawFrameBuffer()
 {
-    for(int x = 0; x < RAYCAST_WIDTH; x++)
-    {
-        for(int y = 0; y < RAYCAST_HEIGHT; y++)
-        {
-            //byte pixel = framebuffer[x][y];
-            //byte r, g, b;
-            //R_GetColor(pixel, &r, &g, &b);
 
-            // SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-            // SDL_RenderDrawPoint(renderer, x, y);
-            // SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        }
-    }
 }
 
 void R_Clear()

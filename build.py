@@ -9,6 +9,6 @@ for h in headers:
 for c in sources:
     buildScript = buildScript + " " + c + " "
 
-buildScript = buildScript + " -o build/N3D -lSDL2 -lSDL2_mixer -lSDL2_image"
+buildScript = buildScript + " -o build/N3D -lSDL2 -lSDL2_mixer -lSDL2_image -lm"
 
 os.system(buildScript)

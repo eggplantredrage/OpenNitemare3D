@@ -7,32 +7,13 @@
 #include "i_sound.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-typedef enum pcx
-{
-    PCX_START_SCREEN,
-    PCX_PLEASE_WAIT,
-    PCX_HUD,
-    PCX_MAIN_MENU,
-    PCX_CHOOSE_EPISODE,
-    PCX_DIFFICULTY,
-    PCX_CONFIG_UNSELECTED,
-    PCX_CONFIG_SELECTED,
-    PCX_CHEAT_MENU,
-    PCX_LOAD_SAVE,
-    PCX_SAVE,
-    PCX_LEVEL_COMPLETE,
-    PCX_ORDER_NOW
-
-}pcx;
-
+#include "pcx.h"
 byte uiframebuffer[320][200];
 byte uitexturebuffer[320*200*4];
 SDL_Texture* uitexture;
 
-uint16_t R_PlayerFace;
-
 pcx overlay;
-SDL_Texture* pcx_images[12];
+SDL_Texture* pcx_images[14];
 void R_ClearUI();
 void R_DrawSprite(int x, int y, r_sprite sprite);
 void R_FreePCX(pcx tobefreed);

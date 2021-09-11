@@ -65,6 +65,11 @@ dat_file_t D_ReadDat(char filename[256])
         entry.data = buffer;
         entry.length = length;
         entries[i] = entry;
+
+        // char* str = malloc(256);
+        // sprintf(str, "dat/%s/%d.bin", filename, i);
+        // puts(str);
+        // I_DumpBinary(buffer, length, str);
     }
     dat.entries = entries;
     dat.count = count;

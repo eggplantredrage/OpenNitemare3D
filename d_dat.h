@@ -3,6 +3,7 @@
 #include "typedefs.h"
 #include "i_binaryreader.h"
 
+
 #define DAT_MAX_ENTRIES 32
 
 typedef struct dat_entry_t
